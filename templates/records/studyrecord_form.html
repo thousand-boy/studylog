@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}新しい記録{% endblock %}
+
+{% block content %}
+{% comment %}
+TODO：登録と編集で共通のフォーム（object があれば編集）
+- {% csrf_token %} を入れる
+- 項目ごとのエラーを表示する
+- カテゴリーがないときは、カテゴリー作成への案内を出す（F-11）
+{% endcomment %}
+<h1 class="h2 fw-bold mb-4">新しい記録</h1>
+{% endblock %}

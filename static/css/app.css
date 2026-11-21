@@ -1,0 +1,164 @@
+:root {
+  --sl-sidebar-bg: #0f1533;
+  --sl-sidebar-text: #c3c8de;
+  --sl-accent: #7c3aed;
+  --sl-primary: #3b4a9e;
+  --sl-primary-hover: #313e86;
+  --sl-bg: #f5f6fa;
+  --sl-border: #e5e7eb;
+  --sl-radius: 0.75rem;
+}
+
+body {
+  background-color: var(--sl-bg);
+  color: #111827;
+}
+
+/* サイドバー：lg未満はメニューボタンで開く（offcanvas）、lg以上は左に固定 */
+.sidebar-inner {
+  background-color: var(--sl-sidebar-bg);
+  color: #fff;
+}
+
+@media (min-width: 992px) {
+  .sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+  }
+}
+
+.brand {
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.brand small {
+  display: block;
+  color: var(--sl-sidebar-text);
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
+.sidebar .nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: 0.5rem;
+  color: var(--sl-sidebar-text);
+}
+
+.sidebar .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+
+.sidebar .nav-link.active {
+  background-color: var(--sl-accent);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Bootstrapのボタンの色を、変数の上書きでブランド色にする */
+.btn-primary {
+  --bs-btn-bg: var(--sl-primary);
+  --bs-btn-border-color: var(--sl-primary);
+  --bs-btn-hover-bg: var(--sl-primary-hover);
+  --bs-btn-hover-border-color: var(--sl-primary-hover);
+  --bs-btn-active-bg: var(--sl-primary-hover);
+  --bs-btn-active-border-color: var(--sl-primary-hover);
+}
+
+.content {
+  max-width: 1200px;
+  padding: 2rem 1.25rem;
+}
+
+@media (min-width: 992px) {
+  .content {
+    padding: 2.5rem 3rem;
+  }
+}
+
+.card {
+  border-color: var(--sl-border);
+  border-radius: var(--sl-radius);
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+}
+
+.form-control,
+.form-select {
+  border-color: var(--sl-border);
+  border-radius: 0.5rem;
+}
+
+.stat-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* 今週の記録件数グラフ（JavaScriptを使わずHTMLとCSSだけで描く） */
+.chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  height: 160px;
+  border-bottom: 1px solid var(--sl-border);
+}
+
+.chart-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  text-align: center;
+}
+
+.chart-bar {
+  background-color: var(--sl-primary);
+  border-radius: 0.25rem 0.25rem 0 0;
+}
+
+.table > thead th {
+  background-color: #f9fafb;
+  color: #374151;
+  font-weight: 600;
+}
+
+.mobile-header {
+  background-color: var(--sl-sidebar-bg);
+  color: #fff;
+}
+
+.sidebar-user {
+  color: var(--sl-sidebar-text);
+}
+
+/* ログイン前の画面（ログイン・ユーザー登録・404）：サイドバーなし */
+.auth-wrapper {
+  min-height: 100vh;
+}
+
+.auth-box {
+  width: 100%;
+  max-width: 420px;
+}
+
+.auth-brand {
+  color: var(--sl-sidebar-bg);
+  font-size: 1.75rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* 記録の本文：長い英単語やURLでも横にはみ出さない */
+.record-text {
+  overflow-wrap: anywhere;
+}

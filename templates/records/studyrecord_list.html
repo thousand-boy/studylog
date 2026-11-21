@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}学習記録{% endblock %}
+
+{% block content %}
+{% comment %}
+TODO：設計書5章のモックアップを参考に作る（F-03・F-06〜F-09）
+- 見出しと「新しい記録」ボタン
+- サマリー（総記録数・今月の記録・学習した日数）と、今週の記録件数グラフ
+  （app.css の .chart / .chart-col / .chart-bar を使う）
+- 検索フォーム（search_form）
+- 記録の表（タイトル・カテゴリー・学習日・編集／削除）
+- 記録がないとき、検索結果がないときの表示
+{% endcomment %}
+<h1 class="h2 fw-bold mb-4">学習記録</h1>
+{% endblock %}

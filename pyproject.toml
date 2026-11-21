@@ -1,0 +1,9 @@
+[tool.ruff]
+# マイグレーションは Django が自動生成するファイルなので対象外にする
+extend-exclude = ["*/migrations/*"]
+
+[tool.ruff.lint]
+# RUF012（クラス属性に変更可能な値を書かない）を外す。
+# Django の Meta.fields や ModelAdmin.list_display などは、
+# 公式ドキュメントどおりクラス属性にリストや辞書を書く作りのため。
+ignore = ["RUF012"]

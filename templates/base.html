@@ -1,0 +1,81 @@
+{% load static %}<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{% endblock %} | StudyLog</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.9/dist/css/bootstrap.min.css" integrity="sha384-yEPZ7jP9S0QKiUQ0m3jjsO4ProIW7wvR9gXkI7JOGa2XVsw53Yke2bsdkBbjmmiX" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.2/font/bootstrap-icons.min.css" integrity="sha384-nWN3KqaaVcbEsCjLSV+2jMjh62Iny/+mN3srM8TZeM8N6aj7eDl5wwYggjAJ4/sJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+</head>
+<body>
+{% if user.is_authenticated %}
+<div class="d-lg-flex">
+  {# スマートフォン用のヘッダー（lg未満でだけ表示） #}
+  <header class="mobile-header d-lg-none d-flex align-items-center gap-2 px-3 py-2">
+    <button class="btn btn-link text-white p-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar" aria-label="メニューを開く">
+      <i class="bi bi-list fs-3" aria-hidden="true"></i>
+    </button>
+    <span class="fw-bold">StudyLog</span>
+  </header>
+
+  {# サイドバー：lg以上では常に表示、lg未満ではメニューボタンで開く #}
+  <aside class="sidebar offcanvas-lg offcanvas-start" id="sidebar" tabindex="-1" aria-label="メインメニュー">
+    <div class="sidebar-inner d-flex flex-column h-100 p-3">
+      <div class="d-flex justify-content-between align-items-start px-2 pt-2">
+        <a class="brand" href="{% url 'records:record_list' %}">StudyLog<small>学習記録アプリ</small></a>
+        <button type="button" class="btn-close btn-close-white d-lg-none" data-bs-dismiss="offcanvas" data-bs-target="#sidebar" aria-label="閉じる"></button>
+      </div>
+      {% with url_name=request.resolver_match.url_name %}
+      <nav class="nav flex-column gap-1 mt-4">
+        {% if url_name == "record_list" or url_name == "record_detail" or url_name == "record_update" or url_name == "record_delete" %}
+          <a class="nav-link active" aria-current="page" href="{% url 'records:record_list' %}"><i class="bi bi-journal-text" aria-hidden="true"></i>学習記録</a>
+        {% else %}
+          <a class="nav-link" href="{% url 'records:record_list' %}"><i class="bi bi-journal-text" aria-hidden="true"></i>学習記録</a>
+        {% endif %}
+        {% if url_name == "record_create" %}
+          <a class="nav-link active" aria-current="page" href="{% url 'records:record_create' %}"><i class="bi bi-plus-circle" aria-hidden="true"></i>新しい記録</a>
+        {% else %}
+          <a class="nav-link" href="{% url 'records:record_create' %}"><i class="bi bi-plus-circle" aria-hidden="true"></i>新しい記録</a>
+        {% endif %}
+        {% if url_name == "category_list" or url_name == "category_create" or url_name == "category_update" or url_name == "category_delete" %}
+          <a class="nav-link active" aria-current="page" href="{% url 'records:category_list' %}"><i class="bi bi-tags" aria-hidden="true"></i>カテゴリー</a>
+        {% else %}
+          <a class="nav-link" href="{% url 'records:category_list' %}"><i class="bi bi-tags" aria-hidden="true"></i>カテゴリー</a>
+        {% endif %}
+      </nav>
+      {% endwith %}
+      <div class="mt-auto px-2 pb-2">
+        <div class="sidebar-user small mb-2"><i class="bi bi-person-circle me-2" aria-hidden="true"></i>{{ user.username }}</div>
+        {# ログアウトはPOSTのみ（Django 5.0以降、GETでは405になる） #}
+        <form method="post" action="{% url 'accounts:logout' %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-sm btn-outline-light w-100"><i class="bi bi-box-arrow-right me-1" aria-hidden="true"></i>ログアウト</button>
+        </form>
+      </div>
+    </div>
+  </aside>
+
+  <main class="flex-grow-1">
+    <div class="container-fluid content">
+      {% include "messages.html" %}
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+</div>
+{% else %}
+{# ログイン前（ログイン・ユーザー登録・404）：サイドバーなしで中央に表示 #}
+<main class="auth-wrapper d-flex align-items-center justify-content-center px-3 py-5">
+  <div class="auth-box">
+    <div class="text-center mb-4">
+      <a class="auth-brand" href="{% url 'accounts:login' %}">StudyLog</a>
+      <p class="text-secondary small mb-0">学習内容と振り返りを残す記録アプリ</p>
+    </div>
+    {% include "messages.html" %}
+    {% block auth_content %}{% endblock %}
+  </div>
+</main>
+{% endif %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.9/dist/js/bootstrap.bundle.min.js" integrity="sha384-WyOxWvTyr1QaMPfiPJSv76iReVthorl5uWlFtZPyK0IEB0hGzo9y5Bp9mYanr8Bu" crossorigin="anonymous"></script>
+</body>
+</html>

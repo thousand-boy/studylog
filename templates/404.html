@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}ページが見つかりません{% endblock %}
+
+{% comment %}
+TODO：ログイン中（content）と未ログイン（auth_content）の両方のブロックに、
+「ページが見つかりません」と一覧（またはログイン画面）へのリンクを書く。
+{% endcomment %}
+{% block content %}<h1 class="h4 fw-bold">ページが見つかりません</h1>{% endblock %}
+{% block auth_content %}<h1 class="h4 fw-bold">ページが見つかりません</h1>{% endblock %}

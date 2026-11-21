@@ -1,11 +1,17 @@
-"""ログイン・ログアウト・ユーザー登録のURL。
+from django.contrib.auth import views as auth_views
+from django.urls import path
 
-TODO
-- "login/"：django.contrib.auth.views.LoginView（name="login"）
-- "logout/"：django.contrib.auth.views.LogoutView（name="logout"、POSTのみ）
-- "signup/"：SignUpView（name="signup"）
-include("django.contrib.auth.urls") は使わない（パスワード再設定のURLまで公開されるため）。
-"""
+from . import views
 
+# include("django.contrib.auth.urls") は使わない。
+# 使わないパスワード再設定のURLまで公開されてしまうため。
 app_name = "accounts"
-urlpatterns = []
+urlpatterns = [
+    path(
+        "login/",
+        auth_views.LoginView.as_view(redirect_authenticated_user=True),
+        name="login",
+    ),
+    path("logout/", auth_views.LogoutView.as_view(), name="logout"),
+    path("signup/", views.SignUpView.as_view(), name="signup"),
+]
